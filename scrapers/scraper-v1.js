@@ -69,6 +69,7 @@ casper.then(function() {
 	/*var departmentNames = casper.getElementsInfo("li.result");
 	this.click(x('//*[@id="FindCourse"]/div/div[1]/div[2]/div[1]/ul/li[2]/input'));
 	departmentNames.forEach(function(department) {
+		//Save this to an array
 		console.log(department.text);
 	});
 */
@@ -107,7 +108,16 @@ casper.then(function() {
 		var names = $('li.result')
 	});
 	console.log(names.length);*/
-	var lol = [];
+	
+
+
+
+
+
+
+
+
+	/**var lol = [];
 
 	 var executer = casper.evaluate(function() {
 	 	$('li.deptColumn').find('li').each(function(){
@@ -189,9 +199,9 @@ casper.then(function() {
 
 
 	console.log("Entering input");
-	this.sendKeys('.deptSelectInput', '010');
+	this.sendKeys('.deptSelectInput', '189');
 	this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
-	this.sendKeys('.courseSelectInput', '275');
+	this.sendKeys('.courseSelectInput', '102');
 	this.sendKeys('.courseSelectInput', casper.page.event.key.Enter , {keepFocus: true});
 	this.sendKeys('.sectionSelectInput', '03');
 	this.sendKeys('.sectionSelectInput', casper.page.event.key.Enter , {keepFocus: true});
@@ -237,7 +247,7 @@ casper.thenClick(x('//*[@id="findMaterialButton"]'), function () {
 casper.wait(5000, function () {
 	casper.capture('test.png');
 	console.log("Capturing image!");
-   	//this.echo(require('utils').dump(this.getElementsAttribute('.clr121', 'title')));
+   	this.echo(require('utils').dump(this.getElementsAttribute('.clr121', 'title')));
 	casper.exit();
 });
 
