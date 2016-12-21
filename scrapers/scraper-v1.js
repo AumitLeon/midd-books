@@ -1,40 +1,6 @@
 /**UTILIZES CASPERJS AND PHANTOM JS**/
 
 
-
-
-/*phantom.casperPath = 'C:/Users/Aumit/Documents/Dev/phantomjs-2.1.1-windows/casperjs-1.1.1/bin';
-phantom.injectJs(phantom.casperPath + '/bootstrap.js');*/
-
-//var utils = require('utils');
-
-/*var casper = require('casper').create();
-
-casper.start('http://www.google.com');
-
-casper.wait(3000, function() {
-	this.echo(this.getTitle());
-});
-
-casper.then(function() {
-	casper.exit();
-});
-
-casper.run();*/
-
-/*var casper = require('casper').create();
-casper.start('http://casperjs.org/');
-
-casper.then(function() {
-    this.echo('First Page: ' + this.getTitle());
-});
-
-casper.thenOpen('http://phantomjs.org', function() {
-    this.echo('Second Page: ' + this.getTitle());
-});
-
-casper.run();*/
-
 var casper = require('casper').create();
 var fs = require("fs");
 
@@ -50,14 +16,6 @@ casper.wait(3000, function() {
 	console.log("Beginning...");
 });
 
-
-
-function getBooks() {
-    var books = document.querySelectorAll(".clr121")
-    return Array.prototype.map.call(books_, function(e) {
-        return e.textContent
-    })
-}
 
 /**Will visit website, and enter the input into the textbox, takes 
 	screenshot, and pic is stored in same directory as script.
@@ -243,17 +201,27 @@ casper.thenClick(x('//*[@id="findMaterialButton"]'), function () {
 	console.log("Searching for books...");
 });
 
-
-casper.wait(5000, function () {
+casper.wait(10000, function () {
 	casper.capture('test.png');
 	console.log("Capturing image!");
-   	this.echo(require('utils').dump(this.getElementsAttribute('.clr121', 'title')));
+	done = false;
+	var books; 
+
+
+	listItems = this.evaluate(function () {
+        var nodes = document.querySelectorAll('.clr121');
+        return [].map.call(nodes, function(node) {
+            return node.textContent;
+        });
+    });
+
+   fs.write('books.txt', JSON.stringify(this.getElementsAttribute('.clr121', 'title')), 'w');
+
+   this.echo(require('utils').dump(this.getElementsAttribute('.clr121', 'title')));
+  
 	casper.exit();
 });
-
+ 	
 casper.run();
 
-
-
-//*[@id="jobs"]
 
