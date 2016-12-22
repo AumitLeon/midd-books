@@ -6,6 +6,7 @@ var fs = require("fs");
 
 var x = require('casper').selectXPath;
 var books = []; 
+var departments = []; 
 
 
 casper.start('http://rutgers.bncollege.com/webapp/wcs/stores/servlet/TBWizardView?catalogId=10001&langId=-1&storeId=58552');
@@ -20,86 +21,25 @@ casper.wait(3000, function() {
 /**Will visit website, and enter the input into the textbox, takes 
 	screenshot, and pic is stored in same directory as script.
 
-	Need to figure out how to actually submit a query and collect results.*/
+	Needd to nest loops, for each. */
 casper.then(function() {
-
 	//Returns list of departments
-	/*var departmentNames = casper.getElementsInfo("li.result");
+	//Stores list of departments into array. 
+	var departmentNames = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.deptColumn > ul > li"
+	);
 	this.click(x('//*[@id="FindCourse"]/div/div[1]/div[2]/div[1]/ul/li[2]/input'));
 	departmentNames.forEach(function(department) {
 		//Save this to an array
 		console.log(department.text);
-	});
-*/
-
-
-	//need to figure out how to list courses....
-	/*console.log("Entering test...");
-	this.sendKeys('.deptSelectInput', '010');
-	this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
-	this.click(x('//*[@id="FindCourse"]/div/div[1]/div[2]/div[1]/ul/li[3]/input'));
-	*/
-
-	//if(casper.exists('input.courseSelectInput.bncbTextInput')){
-
-
-
-
-
-
-
-
-	/*var nameCount = this.evaluate(function() {
-		var numbs = [];
-    	$('li.result').each(function () {
-    		numbs.push(this.text);
-    	});
-    	return numbs;
-	});
-	this.echo(nameCount);
-
-	nameCount.forEach(function(course) {
-		console.log(course);
+		departments.push(department.text);
 	});
 
-	/*casper.evaluate(function() {
-		var names = $('li.result')
+	department.forEach(function(dept) {
+		/**Need to Figure out the logic hee....*/
+		this.sendKeys('.deptSelectInput', dept); 
+		this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
+		var courses = casper.getElementsInfo("")
 	});
-	console.log(names.length);*/
-	
-
-
-
-
-
-
-
-
-	/**var lol = [];
-
-	 var executer = casper.evaluate(function() {
-	 	$('li.deptColumn').find('li').each(function(){
-      //var a = $(this).prev().children().first();
-     		var a = this.text;
-     		lol.push(a);
-     	});
-     	return lol;
-	 });
-	 console.log(executer);
-
-	var nameCount = this.evaluate(function() {
-		var haha = [];
-    	var names = $('input.deptSelectInput').nextAll('li.result');
-    	//$('input.deptSelectInput').nextUntil('li.courseColumn').each(function(el) {
-    	//	 haha.push(el.text);
-    	//})
-    		return names.text
-		});
-	//this.echo(nameCount);
-	console.log(nameCount);	
-	 /*executer.forEach(function(el){
-	 	console.log(el);
-	 });*/
 
 	
 /*
@@ -154,15 +94,15 @@ casper.then(function() {
 */
 
 
+/**COMMENT THIS PORTION OUT WHEN TESTING FUNCTIONALITY OF RETRIEIVNG COURSE/DEPT/SECTION INFO****/
 
-
-	console.log("Entering input");
+	/*console.log("Entering input");
 	this.sendKeys('.deptSelectInput', '189');
 	this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
 	this.sendKeys('.courseSelectInput', '102');
 	this.sendKeys('.courseSelectInput', casper.page.event.key.Enter , {keepFocus: true});
 	this.sendKeys('.sectionSelectInput', '03');
-	this.sendKeys('.sectionSelectInput', casper.page.event.key.Enter , {keepFocus: true});
+	this.sendKeys('.sectionSelectInput', casper.page.event.key.Enter , {keepFocus: true});*/
 });
 /*.thenEvaluate(function(selector){
 	/*console.log("Entering the evaluate phase....")
@@ -201,6 +141,8 @@ casper.thenClick(x('//*[@id="findMaterialButton"]'), function () {
 	console.log("Searching for books...");
 });
 
+/**Results page. Will take a screensht of the results page while storing the content in json format. 
+**
 casper.wait(10000, function () {
 	casper.capture('test.png');
 	console.log("Capturing image!");
@@ -218,10 +160,10 @@ casper.wait(10000, function () {
    fs.write('books.txt', JSON.stringify(this.getElementsAttribute('.clr121', 'title')), 'w');
 
    this.echo(require('utils').dump(this.getElementsAttribute('.clr121', 'title')));
-  
-	casper.exit();
+
+   casper.exit();
 });
- 	
+ 	*/
 casper.run();
 
 
