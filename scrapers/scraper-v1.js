@@ -27,15 +27,43 @@ casper.then(function() {
 	//Returns list of departments
 	//Stores list of departments into array. 
 	var departmentNames = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.deptColumn > ul > li");
-	this.click(x('//*[@id="FindCourse"]/div/div[1]/div[2]/div[1]/ul/li[2]/input'));
+	//this.click(x('//*[@id="FindCourse"]/div/div[1]/div[2]/div[1]/ul/li[2]/input'));
 	departmentNames.forEach(function(department) {
 		//Save this to an array
-		console.log(department.text);
+		//console.log(department.text);
 		departments.push(department.text);
 	});
 
+	
+	/**funciton works
+	departments.forEach(function(dept) {
+		console.log(dept);
+	});*/
+
+/**This is not working. Look at casper Docs to see maybe cant use casper object twice here.**/
+	this.sendKeys('.deptSelectInput', deparmtent[1]); 
+	this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
+	var courses = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.courseColumn > ul > li");
+	courses.forEach(function(course) {
+		console.log(course.text);
+	});
+
+
+	//var departmentNames = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.deptColumn > ul > li");
+	/*departments.forEach(function(dept) {
+		this.sendKeys('.deptSelectInput', dept); 
+		this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
+		var courses = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.courseColumn > ul > li");
+		this.click(x('//*[@id="FindCourse"]/div/div[1]/div[2]/div[1]/ul/li[3]/input'));
+		courseNames.forEach(function(course) {
+			console.log(course.text);
+		});
+	});*/
+
+	/* Primary algorithm for filling and submitting forms.
+
 	department.forEach(function(dept) {
-		/**Need to Figure out the logic hee....*/
+		/**Need to Figure out the logic hee....*
 		this.sendKeys('.deptSelectInput', dept); 
 		this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
 		var courses = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.courseColumn > ul > li");
@@ -50,8 +78,7 @@ casper.then(function() {
 				this.sendKeys('.sectionSelectInput', casper.page.event.key.Enter , {keepFocus: true});
 			});
 		});
-	});
-
+	});*/
 	
 /**COMMENT THIS PORTION OUT WHEN TESTING FUNCTIONALITY OF RETRIEIVNG COURSE/DEPT/SECTION INFO****/
 
