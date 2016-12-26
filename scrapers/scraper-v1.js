@@ -34,20 +34,24 @@ casper.then(function() {
 		departments.push(department.text);
 	});
 
+
+	this.sendKeys('.deptSelectInput', departments[1]); 
+	this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
+
+	
 	
 	/**funciton works
 	departments.forEach(function(dept) {
 		console.log(dept);
 	});*/
 
-/**This is not working. Look at casper Docs to see maybe cant use casper object twice here.**/
+/**This is not working. Look at casper Docs to see maybe cant use casper object twice here.**
 	this.sendKeys('.deptSelectInput', deparmtent[1]); 
-	this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
-	var courses = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.courseColumn > ul > li");
+	this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});*/
+	/*var courses = this.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.courseColumn > ul > li");
 	courses.forEach(function(course) {
 		console.log(course.text);
-	});
-
+	});*/
 
 	//var departmentNames = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.deptColumn > ul > li");
 	/*departments.forEach(function(dept) {
@@ -91,9 +95,37 @@ casper.then(function() {
 	this.sendKeys('.sectionSelectInput', casper.page.event.key.Enter , {keepFocus: true});*/
 });
 
-casper.thenClick(x('//*[@id="findMaterialButton"]'), function () {
-	console.log("Searching for books...");
+casper.then(function() {
+	casper.capture('test.png');
 });
+
+casper.wait(5000, function() {
+	/*WORKS HERE
+	departments.forEach(function(dept) {
+		console.log(dept);
+	});*/
+
+	var courseNames = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.courseColumn > ul > li");
+	courseNames.forEach(function(course) {
+		console.log(course.text);
+		//courses.push(course.text);
+	});
+
+	/*courses.forEach(function(test) {
+		console.log(test);
+	});*/
+});
+
+/* Doesn't work atm
+casper.then(function() {
+	courses.forEach(function(test) {
+		console.log(test);
+	});
+});
+
+/*casper.thenClick(x('//*[@id="findMaterialButton"]'), function () {
+	console.log("Searching for books...");
+});*/
 
 /**Results page. Will take a screensht of the results page while storing the content in json format. 
 **
