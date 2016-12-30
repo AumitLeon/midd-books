@@ -127,7 +127,7 @@ casper.then(function() {
 casper.then(function() {
 	departments.forEach(function(dept_) {
 		//console.log(dept_);
-		casper.then(function() {
+		casper.wait(5000, function() {
 			this.sendKeys('.deptSelectInput', dept_); 
 			this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
 			casper.wait(5000, function() {
@@ -136,9 +136,41 @@ casper.then(function() {
 					console.log(course.text);
 					//courses.push(course.text);
 				});
+				console.log('\n');
+				//casper.back();
 			});
+			//console.log("-----"+dept_); depeartment, course, department
+			//casper.wait(5000, function() {
+			//casper.back();
+			//});
 		});
+		//console.log("-----"+dept_); //all departments then courses
+		casper.back();
 	});
+
+
+	/*departments.forEach(function(dept_) {
+		//console.log(dept_);
+		casper.then(function() {
+			this.sendKeys('.deptSelectInput', dept_); 
+			this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
+		});
+		casper.wait(5000, function() {
+			var courseNames = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.courseColumn > ul > li");
+			courseNames.forEach(function(course) {
+				console.log(course.text);
+					//courses.push(course.text);
+			});
+			console.log('\n');
+				//casper.back();
+		});
+			//console.log("-----"+dept_); depeartment, course, department
+			//casper.wait(5000, function() {
+		casper.back();
+			//});
+		//console.log("-----"+dept_); //all departments then courses
+	});*/
+
 });
 
 
