@@ -131,10 +131,10 @@ casper.then(function() {
 			this.sendKeys('.deptSelectInput', dept_); 
 			this.sendKeys('.deptSelectInput', casper.page.event.key.Enter , {keepFocus: true});
 			casper.wait(5000, function() {
-				var courseNames = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.courseColumn > ul > li");
+				courseNames = casper.getElementsInfo("#FindCourse > div > div.campusSection > div:nth-child(2) > div.courseBookSelector > ul > li.courseColumn > ul > li");
 				courseNames.forEach(function(course) {
 					console.log(course.text);
-					//courses.push(course.text);
+					courses.push(course.text);
 				});
 				console.log('\n');
 				//casper.back();
@@ -147,7 +147,10 @@ casper.then(function() {
 		//console.log("-----"+dept_); //all departments then courses
 		casper.back();
 	});
-
+casper.then();
+	/*courses.forEach(function(course_) {
+			console.log(course_);
+	});*/
 
 	/*departments.forEach(function(dept_) {
 		//console.log(dept_);
