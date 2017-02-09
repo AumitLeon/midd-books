@@ -1,12 +1,13 @@
 """View states for asp.net"""
 
+
 import scrapy
 
 class MiddSpider(scrapy.Spider):
     name = 'midd_spider'
     start_urls = ['http://bookstore.middlebury.edu/SelectTermDept.aspx']
     download_delay = 1.5
-
+#ctl00_ctl00_Content_Content_courseSelect_select_term
     def parse(self, response):
         """for author in response.css('select#author > option ::attr(value)').extract():
             yield scrapy.FormRequest(
@@ -17,10 +18,11 @@ class MiddSpider(scrapy.Spider):
                 },
                 callback=self.parse_tags
             )"""
-
+#ctl00_ctl00_Content_Content_courseSelect_select_term
 #Reverse engineer the above code to work for the middlebury book store.
 
-        for term in response.css('select#ctl00_ctl00_Content_Content_courseSelect_select_term" > option ::attr(text)').extract():
+        #for term in response.css('select#ctl00_ctl00_Content_Content_courseSelect_select_term > option ::attr(text)').extract():
+        for term in response.css('#ctl00_ctl00_Content_Content_courseSelect_select_term > option ::text').extract():
             yield scrapy.FormRequest(
                 'http://bookstore.middlebury.edu/SelectTermDept.aspx',
                 formdata={
@@ -47,12 +49,12 @@ class MiddSpider(scrapy.Spider):
                 callback=self.parse_results,
             )"""
 
-        for department in response.css('select#ctl00_ctl00_Content_Content_courseSelect_select_dept > option ::attr(text)').extract():
+        for department in response.css('#ctl00_ctl00_Content_Content_courseSelect_select_dept > option ::text').extract():
             yield scrapy.FormRequest(
                 'http://bookstore.middlebury.edu/SelectTermDept.aspx',
                 formdata={
                     'term': response.css(
-                        'ctl00_ctl00_Content_Content_courseSelect_select_term > option[selected]  ::attr(text)'
+                        'ctl00_ctl00_Content_Content_courseSelect_select_term > option[selected]  ::text'
                     ).extract_first(),
                     'department': department,
                     '__VIEWSTATE': response.css('input#__VIEWSTATE::attr(value)').extract_first()
@@ -75,14 +77,12 @@ class MiddSpider(scrapy.Spider):
                     'section': section,
                     '__VIEWSTATE': response.css('input#__VIEWSTATE::attr(value)').extract_first()
                 },
-                callback=self.parse_add"""
-
-            for section in response.css("//*[@id='ctl00_ctl00_Content_Content_courseSelect_select_section'] > option ::attr(text)").extract():
+                callback=self.parse_add
+            )"""
+        for section in response.css('#ctl00_ctl00_Content_Content_courseSelect_select_section > option ::text').extract():
                 yield {
                     'section': section
                 }
-
-            )
 
     """def parse_add(self, response):
         FormRequest.from_response(
@@ -94,6 +94,8 @@ class MiddSpider(scrapy.Spider):
             dont_filter=True,
             callback=self.parse
         )"""
+
+
 
 
 
