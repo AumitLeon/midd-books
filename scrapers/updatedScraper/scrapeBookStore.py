@@ -52,6 +52,7 @@ class ArchitectFinderScraper(object):
         selectTerm = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_term'))
         optionIndexesTerm = range(0, len(selectTerm.options))
         counter = 0
+        submitNow = 0
         for indexes in optionIndexesTerm:
            # print indexes
             selectTerm.select_by_index(indexes)
@@ -73,12 +74,17 @@ class ArchitectFinderScraper(object):
                 selectSect = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_section'))
                 optionIndexesSect = range(0, len(selectSect.options))
                 counter = 0
+                if submitNow == 1:
+                    optionIndexesSect = range(iteration, len(selectSect.options))
+
                 for indexesBooks in optionIndexesSect:
                     selectSect.select_by_index(indexesBooks)
                     #time.sleep(3)
                     counter += 1
                     iteration = counter
-                    if counter >= 5:                 
+                   
+                    if counter >= 5:       
+                        print "here"          
                         submitNow = 1
                         self.driver.find_element_by_id('ctl00_ctl00_Content_Content_btnGetCourseMaterials').click()
                         time.sleep(3)
@@ -86,21 +92,40 @@ class ArchitectFinderScraper(object):
                         count = 0
                        # tag = s.findAll('div', {'class': 'material_info'})
                         for tag in s.findAll('h3'):
+                            print "inside for loop"
                             print tag.text
+                        #break
                         
                         #break
-                    self.driver.execute_script("window.history.go(-1)")
-                    time.sleep(3)
+                    
+                    if submitNow == 1:
+                         self.driver.execute_script("window.history.go(-1)")
+                         time.sleep(6)
+                         """self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_btnAddCourseToList').click()
+                         time.sleep(3)
+
+                         selectSect = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_section'))
+                         optionIndexesSect = range(0, len(selectSect.options))
+                         submitNow = 0
+
+                         selectSect = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_section'))
+                         optionIndexesSect = range(0, len(selectSect.options))"""
+                         selectSect = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_section'))
+                         optionIndexesSect = range(0, len(selectSect.options))
+                         submitNow = 0
+                         self.driver.save_screenshot('lol.png')
+                         print "printing image"
+                         break
+                    else:
+                        self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_btnAddCourseToList').click()
+                        time.sleep(3)
+
+                        selectSect = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_section'))
+                        optionIndexesSect = range(0, len(selectSect.options))
                   
-                  
+                    #self.driver.save_screenshot('lol.png')
+                    #print "printing image"
                    
-                    selectSect = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_section'))
-                    optionIndexesSect = range(iteration, len(selectSect.options))
-                    self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_btnAddCourseToList').click()
-                    time.sleep(3)
-                    self.driver.save_screenshot('lol.png')
-                    print "printing image"
-                    break
 
                     
 
@@ -108,8 +133,8 @@ class ArchitectFinderScraper(object):
                     #self.driver.save_screenshot('lol.png')
                     #break
                 
-                selectDept = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_dept'))
-                optionIndexesDept = range(0, len(selectDept.options))
+                #selectDept = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_dept'))
+                #optionIndexesDept = range(0, len(selectDept.options))
                 break
                 
                 #break
@@ -117,8 +142,9 @@ class ArchitectFinderScraper(object):
                 #print counter
                 #print
                 #counter += 1
-            selectTerm = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_term'))
-            optionIndexesTerm = range(0, len(selectTerm.options))
+            
+            #selectTerm = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_term'))
+            #optionIndexesTerm = range(0, len(selectTerm.options))
             break
 
         #self.driver.save_screenshot('lol.png')
@@ -129,7 +155,7 @@ class ArchitectFinderScraper(object):
       
      
     
-    
+        
         self.driver.quit()
         print "haha"
         
