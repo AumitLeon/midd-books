@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-
+"""New problem: Navigating back to the search page after getting textbook info needs to clear the books already selected, and also begin selectingn from the the correct column at the correct spot.
+"""
 """
 Python script for scraping the results from http://architectfinder.aia.org/frmSearch.aspx
 """
@@ -100,7 +101,16 @@ class ArchitectFinderScraper(object):
                     
                     if submitNow == 1:
                          self.driver.execute_script("window.history.go(-1)")
-                         time.sleep(6)
+                         time.sleep(3)
+                         #selectDept = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_dept'))
+                         #optionIndexesDept = range(0, len(selectDept.options))
+                         selectSect = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_section'))
+                         optionIndexesSect = range(0, len(selectSect.options))
+                         self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_btnAddCourseToList').click() #not really sure why this works but it does
+                         time.sleep(3)
+                         selectDept.select_by_index(indexesSect)
+                         time.sleep(3)
+          
                          """self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_btnAddCourseToList').click()
                          time.sleep(3)
 
@@ -110,9 +120,12 @@ class ArchitectFinderScraper(object):
 
                          selectSect = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_section'))
                          optionIndexesSect = range(0, len(selectSect.options))"""
-                         selectSect = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_section'))
+                         
+                         
+                         
+                         """selectSect = Select(self.driver.find_element_by_id('ctl00_ctl00_Content_Content_courseSelect_select_section'))
                          optionIndexesSect = range(0, len(selectSect.options))
-                         submitNow = 0
+                         submitNow = 0"""
                          self.driver.save_screenshot('lol.png')
                          print "printing image"
                          break
